@@ -6,9 +6,9 @@ keystore_passwords.txt
 release.keystore
 
 # Local / CI build workspace produced by scripts/integrate.sh
-build-src/
-cherrygram/
-app/
+/build-src/
+/cherrygram/
+/app/
 
 # Gradle / Android
 .gradle/

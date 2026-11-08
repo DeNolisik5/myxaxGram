@@ -66,6 +66,7 @@ rm -rf "$DST_MAIN/java/com/exteragram/messenger/plugins"
 cp -R "$EL_MAIN/java/com/exteragram/messenger/plugins" \
       "$DST_MAIN/java/com/exteragram/messenger/plugins"
 
+mkdir -p "$DST_MAIN/java/com/exteragram/messenger/preferences"
 cp "$EL_MAIN/java/com/exteragram/messenger/preferences/BasePreferencesActivity.java" \
    "$DST_MAIN/java/com/exteragram/messenger/preferences/BasePreferencesActivity.java"
 

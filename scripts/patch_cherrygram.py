@@ -221,12 +221,9 @@ sub_once(
         include "arm64-v8a", "armeabi-v7a"
         universalApk true
     }""",
-    """    splits.abi {
-        enable true
-        reset()
-        //noinspection ChromeOsAbiSupport
-        include "arm64-v8a"
-        universalApk false
+    """    // ndk.abiFilters is set per flavor; splits.abi conflicts with it in AGP 8.x.
+    splits.abi {
+        enable false
     }""",
 )
 

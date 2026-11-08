@@ -9,8 +9,6 @@
 // the exteraless fork (see buildChaquopyRuntime* below): the fork adds the
 // JNI entry points the plugin bridge relies on.
 
-import com.chaquo.python.internal.Common
-
 apply plugin: 'com.chaquo.python'
 
 android {
@@ -56,18 +54,18 @@ dependencies {
 }
 
 def chaquopyPythonVersion = '3.11'
+// Chaquopy 17.0.0 + Python 3.11 target build (matches exteraless fork).
+// Override with CHAQUOPY_PYTHON_TARGET (e.g. 3.11.14-0) if needed.
+def chaquopyPythonTarget = System.getenv('CHAQUOPY_PYTHON_TARGET') ?: '3.11.14-0'
 def chaquopySourceDir = file('chaquopy')
 def chaquopyRuntimeDir = layout.buildDirectory.dir('chaquopy/runtime').get().asFile
-def chaquopyTarget = com.chaquo.python.internal.Common.PYTHON_VERSIONS.find {
-    it.key.startsWith("${chaquopyPythonVersion}.")
-}
 def chaquopyBuildPython = System.getenv('CHAQUOPY_BUILD_PYTHON')
 def chaquopyAbis = android.defaultConfig.ndk.abiFilters.sort(false)
 
 def chaquopyRuntimeTasks = chaquopyAbis.collect { String abi ->
     tasks.register("buildChaquopyRuntime${abi.split(/[-_]/)*.capitalize().join()}", Exec) {
         def targetZip = configurations.detachedConfiguration(dependencies.create(
-                "com.chaquo.python:target:${chaquopyTarget.key}-${chaquopyTarget.value}:${abi}@zip"))
+                "com.chaquo.python:target:${chaquopyPythonTarget}:${abi}@zip"))
         def outputDir = new File(chaquopyRuntimeDir, abi)
         inputs.files(fileTree(chaquopySourceDir) {
             include 'exteraless/build.sh'

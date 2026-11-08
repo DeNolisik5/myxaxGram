@@ -1,0 +1,33 @@
+# Secrets and signing material (never commit)
+.gh_token
+*.keystore
+*.jks
+keystore_passwords.txt
+release.keystore
+
+# Local / CI build workspace produced by scripts/integrate.sh
+build-src/
+cherrygram/
+app/
+
+# Gradle / Android
+.gradle/
+local.properties
+**/build/
+**/.cxx/
+captures/
+.externalNativeBuild/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+*.iml

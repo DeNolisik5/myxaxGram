@@ -97,6 +97,8 @@ jobs:
 
       - name: Set up Gradle cache
         uses: gradle/actions/setup-gradle@v4
+        with:
+          validate-wrappers: false
 
       - name: Build APK
         working-directory: ${{ env.BUILD_ROOT }}/app

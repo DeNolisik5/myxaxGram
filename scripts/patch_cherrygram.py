@@ -236,6 +236,8 @@ sub_once(
     'outputFileName = "myxaxGram-${APP_VERSION_NAME_CHERRY}-TG-${defaultConfig.versionName}-${abi}.apk"',
 )
 
+import re
+
 CI_ENV_OLD = """def env = loadEnv("${project.rootDir}/secrets_for_ci.env")
 env.each { key, value ->
     ext."$key" = value
@@ -245,9 +247,23 @@ def env = ciEnvFile.exists() ? loadEnv(ciEnvFile.path) : [:]
 env.each { key, value ->
     ext."$key" = value
 }"""
+CI_ENV_RE = re.compile(
+    r'def\s+env\s*=\s*loadEnv\(\s*"\$\{project\.rootDir\}/secrets_for_ci\.env"\s*\)\s*'
+    r'env\.each\s*\{\s*key\s*,\s*value\s*->\s*ext\."\$key"\s*=\s*value\s*\}',
+    re.S,
+)
 
 for gradle in sorted(ROOT.glob("TMessagesProj_App*/build.gradle")):
-    sub_if_present(str(gradle.relative_to(ROOT)), CI_ENV_OLD, CI_ENV_NEW)
+    rel = str(gradle.relative_to(ROOT))
+    if sub_if_present(rel, CI_ENV_OLD, CI_ENV_NEW):
+        continue
+    text = gradle.read_text(encoding="utf-8")
+    if 'secrets_for_ci.env' not in text or 'ciEnvFile' in text:
+        continue
+    new, n = CI_ENV_RE.subn(CI_ENV_NEW, text)
+    if n:
+        gradle.write_text(new, encoding="utf-8")
+        changed.append(rel)
 
 # --------------------------------------------------------------------------
 # Settings screen: "Plugins" strictly between privacy and about

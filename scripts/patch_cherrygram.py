@@ -52,6 +52,21 @@ def append_once(rel: str, block: str, marker: str) -> None:
     write(rel, text + "\n" + block)
 
 
+def sub_if_present(rel: str, old: str, new: str) -> bool:
+    path = ROOT / rel
+    if not path.is_file():
+        return False
+    text = path.read_text(encoding="utf-8")
+    if old not in text:
+        return False
+    if new in text and old not in text.replace(new, ""):
+        # already patched form exists
+        return True
+    path.write_text(text.replace(old, new), encoding="utf-8")
+    changed.append(rel)
+    return True
+
+
 # --------------------------------------------------------------------------
 # Gradle wiring
 # --------------------------------------------------------------------------
@@ -221,18 +236,18 @@ sub_once(
     'outputFileName = "myxaxGram-${APP_VERSION_NAME_CHERRY}-TG-${defaultConfig.versionName}-${abi}.apk"',
 )
 
-sub_once(
-    "TMessagesProj_AppStandalone/build.gradle",
-    """def env = loadEnv("${project.rootDir}/secrets_for_ci.env")
+CI_ENV_OLD = """def env = loadEnv("${project.rootDir}/secrets_for_ci.env")
 env.each { key, value ->
     ext."$key" = value
-}""",
-    """def ciEnvFile = new File("${project.rootDir}/secrets_for_ci.env")
+}"""
+CI_ENV_NEW = """def ciEnvFile = new File("${project.rootDir}/secrets_for_ci.env")
 def env = ciEnvFile.exists() ? loadEnv(ciEnvFile.path) : [:]
 env.each { key, value ->
     ext."$key" = value
-}""",
-)
+}"""
+
+for gradle in sorted(ROOT.glob("TMessagesProj_App*/build.gradle")):
+    sub_if_present(str(gradle.relative_to(ROOT)), CI_ENV_OLD, CI_ENV_NEW)
 
 # --------------------------------------------------------------------------
 # Settings screen: "Plugins" strictly between privacy and about

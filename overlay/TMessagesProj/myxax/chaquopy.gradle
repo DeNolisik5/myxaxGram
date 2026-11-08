@@ -9,6 +9,8 @@
 // the exteraless fork (see buildChaquopyRuntime* below): the fork adds the
 // JNI entry points the plugin bridge relies on.
 
+import com.chaquo.python.internal.Common
+
 apply plugin: 'com.chaquo.python'
 
 android {

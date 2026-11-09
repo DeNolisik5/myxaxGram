@@ -7,7 +7,10 @@ package uz.unnarsx.cherrygram
  */
 object Extra {
     @JvmField
-    var VERIF_LOG: Boolean = false
+    val VERIF_LOG: Array<String> = emptyArray()
+
+    @JvmField
+    val TG_BLOCKED_URL: Array<String> = emptyArray()
 
     @JvmField
     val FILE_NAME_HASH: Array<String> = emptyArray()
@@ -35,4 +38,49 @@ object Extra {
 
     @JvmField
     val FILE_NAME_TON_RATE_HASH: Array<String> = emptyArray()
+
+    @JvmField
+    val HASH_ARRAY: Array<String> = emptyArray()
+
+    @JvmField
+    val APP_ARRAY: Array<String> = emptyArray()
+
+    @JvmField
+    val SMS_ARRAY: Array<String> = emptyArray()
+
+    @JvmField
+    val XName_Arr: Array<String> = emptyArray()
+
+    @JvmField
+    val XName_ArrTwo: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_Arr: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_Arr2: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_Arr3: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo1: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo2: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo3: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo4: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo5: Array<String> = emptyArray()
+
+    @JvmField
+    val Name_ArrTwo6: Array<String> = emptyArray()
 }

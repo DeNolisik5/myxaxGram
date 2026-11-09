@@ -3,11 +3,9 @@
 #define MYXAX_SECURE_VALIDATOR_STUB_HPP
 
 #include <jni.h>
-#include <cstdint>
 
 namespace secure_validator {
     inline void maybeForceDisconnectOrUpdate(JNIEnv*, int, int) {}
-    inline void maybeForceDisconnectOrUpdate(JNIEnv*, int32_t, int32_t) {}
     inline bool has_jni_hook(JNIEnv*) { return false; }
     inline bool has_xhook() { return false; }
     inline bool validate_signature(JNIEnv*) { return true; }

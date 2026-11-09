@@ -406,3 +406,15 @@ sub_once(
 print("patched files:")
 for rel in changed:
     print(f"  {rel}")
+
+# --------------------------------------------------------------------------
+# Public Cherrygram source gaps
+# --------------------------------------------------------------------------
+
+sub_once(
+    "TMessagesProj/jni/CMakeLists.txt",
+    "include(${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)",
+    "if(EXISTS ${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)\n"
+    "    include(${CMAKE_HOME_DIRECTORY}/colorado/CMakeLists.txt)\n"
+    "endif()",
+)
